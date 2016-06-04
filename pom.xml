@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.sudothought</groupId>
+  <artifactId>slack-gateway</artifactId>
+  <version>1.0</version>
+
+  <prerequisites>
+    <maven>3.2.1</maven>
+  </prerequisites>
+
+  <properties>
+    <jdk.version>1.8</jdk.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.build.timestamp.format>yyyy-MM-dd-HH:mm:ss</maven.build.timestamp.format>
+
+    <skip.integration.tests>true</skip.integration.tests>
+
+    <guava.version>19.0</guava.version>
+
+    <metrics.version>3.1.2</metrics.version>
+    <milton.version>2.7.1.5</milton.version>
+    <curator.version>2.10.0</curator.version>
+
+    <retrofit.version>2.0.2</retrofit.version>
+
+    <spark.version>2.5</spark.version>
+
+    <logback.version>1.1.7</logback.version>
+    <slf4j.version>1.7.21</slf4j.version>
+
+    <jsr305.version>3.0.1</jsr305.version>
+    <findbugs.version>3.0.3</findbugs.version>
+    <junit.version>4.12</junit.version>
+
+    <compiler.version>2.3.2</compiler.version>
+    <assembly.version>2.6</assembly.version>
+    <deploy.version>2.8.2</deploy.version>
+    <source.plugin.version>2.4</source.plugin.version>
+    <maven.compiler.version>3.5.1</maven.compiler.version>
+    <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
+    <heroku-plugin.version>0.4.4</heroku-plugin.version>
+  </properties>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>com.sparkjava</groupId>
+      <artifactId>spark-core</artifactId>
+      <version>${spark.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-simple</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${compiler.version}</version>
+        <configuration>
+          <source>${jdk.version}</source>
+          <target>${jdk.version}</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>${deploy.version}</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>${assembly.version}</version>
+        <executions>
+          <execution>
+            <id>slack-gateway</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <finalName>slack-gateway</finalName>
+              <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+              </descriptorRefs>
+              <archive>
+                <manifest>
+                  <mainClass>com.sudothought.SlackGateway</mainClass>
+                  <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                </manifest>
+              </archive>
+            </configuration>
+          </execution>
+
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>com.heroku.sdk</groupId>
+        <artifactId>heroku-maven-plugin</artifactId>
+        <version>${heroku-plugin.version}</version>
+        <configuration>
+          <jdkVersion>${jdk.version}</jdkVersion>
+          <appName>spark-gateway</appName>
+          <processTypes>
+            <web>java -jar ./target/slack-gateway-1.0-jar-with-dependencies.jar</web>
+          </processTypes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
