@@ -1,42 +1,36 @@
 package com.sudothought;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import spark.Route;
-
-import static spark.Spark.get;
-import static spark.Spark.port;
-import static spark.Spark.post;
+import spark.Service;
 
 public class SlackGateway {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(SlackGateway.class);
-
   public static void main(final String[] args) {
-    port(getHerokuAssignedPort());
-    get("/hello", (req, res) -> "Hello Heroku World");
+    Service service = Service.ignite();
+    service.port(getHerokuAssignedPort());
+    final SlackGateway slackGateway = new SlackGateway(service);
+    final ParticleMapping particleMapping = new ParticleMapping(slackGateway);
+  }
 
+  private final Config  config;
+  private final Service spark;
 
-    final Route ledRoute = (req, res) -> {
-      final SlackRequest slackRequest = new SlackRequest(req);
-      if ("debug".equalsIgnoreCase(slackRequest.getText())) {
-        LOGGER.info("Values: " + slackRequest);
-        return "Values: " + slackRequest;
-      }
+  public SlackGateway(final Service spark) {
+    this.config = ConfigFactory.load();
+    this.spark = spark;
+  }
 
-      return "Values: " + slackRequest;
-    };
-    get("/led", ledRoute);
-    post("/led", ledRoute);
+  public Config getConfig() { return this.config; }
+
+  public void addMapping(final String path, final Route route) {
+    this.spark.get(path, route);
+    this.spark.post(path, route);
   }
 
   private static int getHerokuAssignedPort() {
-    final ProcessBuilder processBuilder = new ProcessBuilder();
-    if (processBuilder.environment().get("PORT") != null) {
-      return Integer.parseInt(processBuilder.environment().get("PORT"));
-    }
-    return 8080;
+    final String port = new ProcessBuilder().environment().get("PORT");
+    return port != null ? Integer.parseInt(port) : 8080;
   }
-
-
 }

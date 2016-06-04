@@ -50,8 +50,7 @@ public class SlackRequest {
 
   @Override
   public String toString() {
-    return "SlackRequest{" +
-        "team_id='" + this.getTeamId() + '\'' +
+    return "team_id='" + this.getTeamId() + '\'' +
         ", team_domain='" + this.getTeamDomain() + '\'' +
         ", channel_id='" + this.getChannelId() + '\'' +
         ", channel_name='" + this.getChannelName() + '\'' +
@@ -59,7 +58,6 @@ public class SlackRequest {
         ", user_name='" + this.getUserName() + '\'' +
         ", command='" + this.getCommand() + '\'' +
         ", text='" + this.getText() + '\'' +
-        ", response_url='" + this.getResponseUrl() + '\'' +
-        '}';
+        ", response_url='" + this.getResponseUrl() + '\'';
   }
 }
