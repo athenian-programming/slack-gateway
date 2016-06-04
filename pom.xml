@@ -6,7 +6,7 @@
 
   <groupId>com.sudothought</groupId>
   <artifactId>slack-gateway</artifactId>
-  <version>1.0</version>
+  <version>1.0-SNAPSHOT</version>
 
   <prerequisites>
     <maven>3.2.1</maven>
@@ -44,7 +44,7 @@
     <source.plugin.version>2.4</source.plugin.version>
     <maven.compiler.version>3.5.1</maven.compiler.version>
     <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
-    <heroku-plugin.version>0.4.4</heroku-plugin.version>
+    <heroku-plugin.version>1.0.3</heroku-plugin.version>
   </properties>
 
   <dependencies>
@@ -67,7 +67,7 @@
 
     <dependency>
       <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
+      <artifactId>slf4j-simple</artifactId>
       <version>${slf4j.version}</version>
     </dependency>
 
@@ -126,10 +126,14 @@
         <version>${heroku-plugin.version}</version>
         <configuration>
           <jdkVersion>${jdk.version}</jdkVersion>
-          <appName>spark-gateway</appName>
+          <appName>slack-gateway</appName>
           <processTypes>
-            <web>java -jar ./target/slack-gateway-1.0-jar-with-dependencies.jar</web>
+            <web>java -jar ./target/slack-gateway-jar-with-dependencies.jar</web>
           </processTypes>
+          <includeTarget>false</includeTarget>
+          <includes>
+            <include>target/slack-gateway-jar-with-dependencies.jar</include>
+          </includes>
         </configuration>
       </plugin>
     </plugins>

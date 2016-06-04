@@ -1,0 +1,3 @@
+
+deploy:
+	mvn heroku:deploy
