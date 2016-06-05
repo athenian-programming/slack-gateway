@@ -28,20 +28,25 @@ $ heroku create app-name
 
 ### Slack
 
-The Slack /led command is mapped to https://slack-gateway.herokuapp.com/led
+The Slack /blynk command is mapped to a POST on https://slack-gateway.herokuapp.com/blynk
+and the /particle command is mapped to a POST on https://slack-gateway.herokuapp.com/particle.
 
 
 ### Photon
 
-The [sketch for the Photon](https://github.com/pambrose/slack-gateway/blob/master/photon/led.ino) sets the LED to D0
+The [sketch for the Photon](https://github.com/pambrose/slack-gateway/blob/master/photon/led.ino) sets the LED to D0.
 
-The Photon device name is assigned in [application.conf](https://github.com/pambrose/slack-gateway/blob/master/src/main/resources/application.conf)
+The Photon device name is assigned in [application.conf](https://github.com/pambrose/slack-gateway/blob/master/src/main/resources/application.conf).
 
+## Blynk
+
+The Blynk device is a [SparkFun Blynk Board](https://www.sparkfun.com/products/13794).
 
 ### Heroku
 
 The *slack.token* and *particle.token* values can be assigned as Config Vars on Heroku. They can
-also be assigned in [application.conf](https://github.com/pambrose/slack-gateway/blob/master/src/main/resources/application.conf)
+also be assigned in
+[application.conf](https://github.com/pambrose/slack-gateway/blob/master/src/main/resources/application.conf).
 
 
 ## Deployment
