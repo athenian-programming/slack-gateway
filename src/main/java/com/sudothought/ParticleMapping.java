@@ -17,8 +17,10 @@ public class ParticleMapping {
     final Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api.particle.io/")
                                                     .addConverterFactory(JacksonConverterFactory.create())
                                                     .build();
-    final ParticleServices particleServices = retrofit.create(ParticleServices.class);
+    final ParticleServices particle = retrofit.create(ParticleServices.class);
     final String particleToken = gateway.getConfigString("particle.token");
+    final String deviceName = gateway.getConfigString("device.name");
+
 
     gateway.addMapping("/led",
                        (req, res) -> {
@@ -30,11 +32,11 @@ public class ParticleMapping {
                          final String arg = slackRequest.getText();
 
                          if (Strings.isNullOrEmpty(arg)) {
-                           final Response<ParticleGetResponse> response = particleServices.getLed(particleToken).execute();
-                           if (!response.isSuccessful())
-                             return format("Error: %s", response.message());
+                           final Response<ParticleGetResponse> resp = particle.getLed(deviceName, particleToken).execute();
+                           if (!resp.isSuccessful())
+                             return format("Error: %s", resp.message());
 
-                           final ParticleGetResponse getResponse = response.body();
+                           final ParticleGetResponse getResponse = resp.body();
                            return getResponse.isConnected() ? format("LED is %s",
                                                                      getResponse.getResult().equals("1") ? "on" : "off")
                                                             : "Device not connected";
@@ -43,11 +45,11 @@ public class ParticleMapping {
                          switch (arg) {
                            case "on":
                            case "off":
-                             final Response<ParticleSetResponse> response = particleServices.setLed(particleToken, arg).execute();
-                             if (!response.isSuccessful())
-                               return format("Error: %s", response.message());
+                             final Response<ParticleSetResponse> resp = particle.setLed(deviceName, particleToken, arg).execute();
+                             if (!resp.isSuccessful())
+                               return format("Error: %s", resp.message());
 
-                             final ParticleSetResponse setResponse = response.body();
+                             final ParticleSetResponse setResponse = resp.body();
                              return setResponse.isConnected() ? format("Turned %s LED", arg) : "Device not connected";
 
                            case "debug":
