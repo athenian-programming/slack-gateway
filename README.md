@@ -54,7 +54,7 @@ $ make deploy
 
 ## Debugging
 
-You can see the request params of a /led command in Slack with:
+You can view the request params of a /led command in Slack with:
 
 ```bash
 /led debug

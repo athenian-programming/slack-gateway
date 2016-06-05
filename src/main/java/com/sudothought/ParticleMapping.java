@@ -12,6 +12,7 @@ import static java.lang.String.format;
 public class ParticleMapping {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ParticleMapping.class);
+  private static final String USAGE  = "Usage: /led [on/off/value]";
 
   public ParticleMapping(final SlackGateway gateway) {
     final Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api.particle.io/")
@@ -32,26 +33,28 @@ public class ParticleMapping {
 
                            final String arg = slackRequest.getText();
 
-                           if (Strings.isNullOrEmpty(arg)) {
-                             final Response<ParticleGetResponse> resp = particle.getLed(deviceName, particleToken).execute();
-                             if (!resp.isSuccessful())
-                               return format("Error: %s", resp.message());
-
-                             final ParticleGetResponse getResponse = resp.body();
-                             return getResponse.isConnected() ? format("LED is %s",
-                                                                       getResponse.getResult().equals("1") ? "on" : "off")
-                                                              : "Device not connected";
-                           }
+                           if (Strings.isNullOrEmpty(arg))
+                             return format("Missing argument. %s", USAGE);
 
                            switch (arg) {
                              case "on":
                              case "off":
-                               final Response<ParticleSetResponse> resp = particle.setLed(deviceName, particleToken, arg).execute();
-                               if (!resp.isSuccessful())
-                                 return format("Error: %s", resp.message());
+                               final Response<ParticleSetResponse> set = particle.setLed(deviceName, particleToken, arg).execute();
+                               if (!set.isSuccessful())
+                                 return format("Error: %s", set.message());
 
-                               final ParticleSetResponse setResponse = resp.body();
+                               final ParticleSetResponse setResponse = set.body();
                                return setResponse.isConnected() ? format("Turned %s LED", arg) : "Device not connected";
+
+                             case "value":
+                               final Response<ParticleGetResponse> get = particle.getLed(deviceName, particleToken).execute();
+                               if (!get.isSuccessful())
+                                 return format("Error: %s", get.message());
+
+                               final ParticleGetResponse getResponse = get.body();
+                               return getResponse.isConnected() ? format("LED is %s",
+                                                                         getResponse.getResult().equals("1") ? "on" : "off")
+                                                                : "Device not connected";
 
                              case "debug":
                                final String msg = format("Request values: %s", slackRequest);
@@ -59,7 +62,7 @@ public class ParticleMapping {
                                return msg;
 
                              default:
-                               return format("Invalid argument: '%s'. Usage: /led [on/off]", arg);
+                               return format("Invalid argument: '%s'. %s", arg, USAGE);
                            }
                          }
                          catch (Throwable e) {

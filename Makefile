@@ -7,3 +7,6 @@ logs:
 
 dashboard:
 	mvn heroku:dashboard
+
+versioncheck:
+	mvn versions:display-dependency-updates versions:display-plugin-updates
