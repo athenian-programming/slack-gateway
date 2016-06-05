@@ -18,12 +18,14 @@ public class ParticleMapping {
                                                     .addConverterFactory(JacksonConverterFactory.create())
                                                     .build();
     final ParticleServices particleServices = retrofit.create(ParticleServices.class);
-    final String tokenVal = new ProcessBuilder().environment().get("particle.token");
-    final String particleToken = tokenVal != null ? tokenVal : gateway.getConfig().getString("particle.token");
+    final String particleToken = gateway.getConfigString("particle.token");
 
     gateway.addMapping("/led",
                        (req, res) -> {
                          final SlackRequest slackRequest = new SlackRequest(req);
+                         if (!gateway.isValid(slackRequest.getToken()))
+                           return format("Invalid Slack token: %s", slackRequest.getToken());
+
                          final String arg = slackRequest.getText();
 
                          if (Strings.isNullOrEmpty(arg))
