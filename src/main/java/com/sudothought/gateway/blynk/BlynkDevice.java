@@ -72,7 +72,7 @@ public class BlynkDevice
                 //final Response<Void> set = this.api.setPin(this.blynkToken, name, pinValue).execute();
 
                 if (!set.isSuccessful())
-                  return format("Blynk server error: %s", set.message());
+                  throw new BlynkException(format("Blynk server error: %s", set.message()));
 
                 return format("Turned %s Blynk %s", arg, name);
 
@@ -81,7 +81,7 @@ public class BlynkDevice
 
                 final Response<String[]> get = this.api.getPin(this.blynkToken, name).execute();
                 if (!get.isSuccessful())
-                  return format("Blynk server error: %s", get.message());
+                  throw new BlynkException(format("Blynk server error: %s", get.message()));
 
                 final String[] getResponse = get.body();
                 return format("Blynk %s is %s", name, getResponse[0].equals("1") ? "on" : "off");
