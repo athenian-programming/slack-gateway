@@ -28,8 +28,8 @@ $ heroku create app-name
 
 ### Slack
 
-The Slack /blynk command is mapped to a POST on https://slack-gateway.herokuapp.com/blynk
-and the /particle command is mapped to a POST on https://slack-gateway.herokuapp.com/particle.
+The Slack **/blynk** command is mapped to a POST on https://slack-gateway.herokuapp.com/blynk
+and the **/particle** command is mapped to a POST on https://slack-gateway.herokuapp.com/particle.
 
 
 ### Photon
@@ -40,7 +40,8 @@ The Photon device name is assigned in [application.conf](https://github.com/pamb
 
 ## Blynk
 
-The Blynk device is a [SparkFun Blynk Board](https://www.sparkfun.com/products/13794).
+The Blynk device is a [SparkFun Blynk Board](https://www.sparkfun.com/products/13794). The LED in this example is the
+onboard one at D5.
 
 ### Heroku
 
