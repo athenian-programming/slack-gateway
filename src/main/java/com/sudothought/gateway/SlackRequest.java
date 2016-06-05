@@ -1,4 +1,4 @@
-package com.sudothought;
+package com.sudothought.gateway;
 
 import com.google.common.base.MoreObjects;
 import spark.Request;

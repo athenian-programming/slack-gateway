@@ -1,6 +1,7 @@
-package com.sudothought;
+package com.sudothought.gateway;
 
 import com.google.common.base.Splitter;
+import com.sudothought.gateway.particle.ParticleDevice;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import spark.Route;
@@ -15,7 +16,7 @@ public class SlackGateway {
 
     final SlackGateway slackGateway = new SlackGateway(service);
 
-    final ParticleMapping particleMapping = new ParticleMapping(slackGateway);
+    final ParticleDevice particleDevice = new ParticleDevice(slackGateway);
   }
 
   private final ConcurrentHashMap<String, String> configVals = new ConcurrentHashMap<>();

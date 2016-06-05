@@ -35,7 +35,7 @@ The Slack /led command is mapped to https://slack-gateway.herokuapp.com/led
 
 The [sketch for the Photon](https://github.com/pambrose/slack-gateway/blob/master/photon/led.ino) sets the LED to D0
 
-The device name is assigned in [application.conf](https://github.com/pambrose/slack-gateway/blob/master/src/main/resources/application.conf)
+The Photon device name is assigned in [application.conf](https://github.com/pambrose/slack-gateway/blob/master/src/main/resources/application.conf)
 
 
 ### Heroku

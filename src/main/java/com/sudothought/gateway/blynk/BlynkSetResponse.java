@@ -1,16 +1,12 @@
-package com.sudothought;
+package com.sudothought.gateway.blynk;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-public class ParticleSetResponse {
-  @JsonProperty
+public class BlynkSetResponse {
   private String  id           = null;
-  @JsonProperty
   private String  last_app     = null;
-  @JsonProperty
   private boolean connected    = true;
-  @JsonProperty
   private String  return_value = null;
+
+  public BlynkSetResponse() { }
 
   public boolean isConnected() { return this.connected; }
 }
