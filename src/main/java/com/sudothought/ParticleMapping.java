@@ -23,25 +23,40 @@ public class ParticleMapping {
     gateway.addMapping("/led",
                        (req, res) -> {
                          final SlackRequest slackRequest = new SlackRequest(req);
+
                          if (!gateway.isValid(slackRequest.getToken()))
                            return format("Invalid Slack token: %s", slackRequest.getToken());
 
                          final String arg = slackRequest.getText();
 
-                         if (Strings.isNullOrEmpty(arg))
-                           return "Missing argument. Usage: /led [on/off]";
+                         if (Strings.isNullOrEmpty(arg)) {
+                           final Response<ParticleGetResponse> response = particleServices.getLed(particleToken).execute();
+                           if (!response.isSuccessful())
+                             return format("Error: %s", response.message());
+
+                           final ParticleGetResponse getResponse = response.body();
+                           return getResponse.isConnected() ? format("LED is %s",
+                                                                     getResponse.getResult().equals("1") ? "on" : "off")
+                                                            : "Device not connected";
+                         }
 
                          switch (arg) {
                            case "on":
                            case "off":
-                             final Response<ParticleResponse> response = particleServices.setLed(particleToken, arg).execute();
-                             return response.isSuccessful() ? format("Turned %s LED", arg) : "Error: " + response.message();
+                             final Response<ParticleSetResponse> response = particleServices.setLed(particleToken, arg).execute();
+                             if (!response.isSuccessful())
+                               return format("Error: %s", response.message());
+
+                             final ParticleSetResponse setResponse = response.body();
+                             return setResponse.isConnected() ? format("Turned %s LED", arg) : "Device not connected";
+
                            case "debug":
                              LOGGER.info("Values: " + slackRequest);
                              return "Values: " + slackRequest;
-                         }
 
-                         return format("Invalid argument: '%s'. Usage: /led [on/off]", arg);
+                           default:
+                             return format("Invalid argument: '%s'. Usage: /led [on/off]", arg);
+                         }
                        });
   }
 }

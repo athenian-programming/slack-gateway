@@ -2,7 +2,7 @@ package com.sudothought;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ParticleResponse {
+public class ParticleSetResponse {
   @JsonProperty
   private String  id           = null;
   @JsonProperty
