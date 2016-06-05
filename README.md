@@ -1,7 +1,21 @@
 # Slack Gateway
 
-[Heroku](https://www.heroku.com/) server for routing [slash command](https://api.slack.com/slash-commands)
+Gateway running on [Heroku](https://www.heroku.com/) for routing [Slash command](https://api.slack.com/slash-commands)
 requests to Particle.io and Blynk.cc devices.
+
+## Usage
+
+From Slack:
+
+```
+/particle on
+/particle off
+/particle value
+
+/blynk on
+/blynk off
+/blynk value
+```
 
 ## Setup
 
