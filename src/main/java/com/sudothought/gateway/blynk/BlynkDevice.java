@@ -16,6 +16,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import spark.Route;
 
+import java.io.IOException;
+
 import static java.lang.String.format;
 
 public class BlynkDevice
@@ -58,14 +60,12 @@ public class BlynkDevice
             switch (arg) {
               case "on":
               case "off":
-                final Gson gson = new Gson();
-                final String pinValue = arg.equals("on") ? gson.toJson(new String[] {"1"})
-                                                         : gson.toJson(new String[] {"0"});
+                this.verifyDeviceIsConnected();
 
-                final MediaType mediaType = MediaType.parse("application/json");
-                final RequestBody body = RequestBody.create(mediaType, pinValue);
+                final String pinValue = new Gson().toJson(new String[] {arg.equals("on") ? "1" : "0"});
+
                 final Request request = new Request.Builder().url(format("%s/%s/pin/%s", this.url, this.blynkToken, name))
-                                                             .put(body)
+                                                             .put(RequestBody.create(MediaType.parse("application/json"), pinValue))
                                                              .build();
                 okhttp3.Response set = new OkHttpClient().newCall(request).execute();
 
@@ -74,22 +74,17 @@ public class BlynkDevice
                 if (!set.isSuccessful())
                   return format("Blynk server error: %s", set.message());
 
-                /*
-                final BlynkSetResponse setResponse = set.body();
-                return setResponse.isConnected() ? format("Turned %s Blynk LED", name)
-                                                 : "Blynk device not connected";
-                                                 */
                 return format("Turned %s Blynk %s", arg, name);
 
               case "value":
+                this.verifyDeviceIsConnected();
+
                 final Response<String[]> get = this.api.getPin(this.blynkToken, name).execute();
                 if (!get.isSuccessful())
                   return format("Blynk server error: %s", get.message());
 
                 final String[] getResponse = get.body();
-                final boolean connected = true;
-                return connected ? format("Blynk %s is %s", name, getResponse[0].equals("1") ? "on" : "off")
-                                 : "Blynk device not connected";
+                return format("Blynk %s is %s", name, getResponse[0].equals("1") ? "on" : "off");
 
               case "debug":
                 final String msg = format("Request values: %s", slackRequest);
@@ -106,5 +101,14 @@ public class BlynkDevice
             return msg;
           }
         };
+  }
+
+  private void verifyDeviceIsConnected()
+      throws IOException, BlynkException {
+    final Response<Boolean> connected = this.api.isHardwareConnected(this.blynkToken).execute();
+    if (!connected.isSuccessful())
+      throw new BlynkException(format("Blynk server error: %s", connected.message()));
+    if (!connected.body())
+      throw new BlynkException("Blynk device not connected");
   }
 }

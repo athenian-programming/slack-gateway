@@ -20,5 +20,6 @@ public interface BlynkServices {
   Call<String[]> getPin(@Path("auth_token") String authToken,
                         @Path("pin") String pin);
 
-
+  @GET("{auth_token}/isHardwareConnected")
+  Call<Boolean> isHardwareConnected(@Path("auth_token") String authToken);
 }
