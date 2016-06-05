@@ -12,11 +12,5 @@ public class ParticleSetResponse {
   @JsonProperty
   private String  return_value = null;
 
-  public String getId() { return this.id; }
-
-  public String getLastApp() { return this.last_app; }
-
   public boolean isConnected() { return this.connected; }
-
-  public String getReturnValue() { return this.return_value; }
 }

@@ -11,8 +11,11 @@ import retrofit2.http.Query;
 public interface ParticleServices {
   @FormUrlEncoded
   @POST("v1/devices/{device}/setLed")
-  Call<ParticleSetResponse> setLed(@Path("device") String device, @Field("access_token") String accessToken, @Field("params") String params);
+  Call<ParticleSetResponse> setLed(@Path("device") String device,
+                                   @Field("access_token") String accessToken,
+                                   @Field("params") String params);
 
   @GET("v1/devices/{device}/getLed")
-  Call<ParticleGetResponse> getLed(@Path("device") String device, @Query("access_token") String accessToken);
+  Call<ParticleGetResponse> getLed(@Path("device") String device,
+                                   @Query("access_token") String accessToken);
 }

@@ -1,5 +1,6 @@
 package com.sudothought;
 
+import com.google.common.base.MoreObjects;
 import spark.Request;
 
 public class SlackRequest {
@@ -50,14 +51,16 @@ public class SlackRequest {
 
   @Override
   public String toString() {
-    return "team_id='" + this.getTeamId() + '\'' +
-        ", team_domain='" + this.getTeamDomain() + '\'' +
-        ", channel_id='" + this.getChannelId() + '\'' +
-        ", channel_name='" + this.getChannelName() + '\'' +
-        ", user_id='" + this.getUserId() + '\'' +
-        ", user_name='" + this.getUserName() + '\'' +
-        ", command='" + this.getCommand() + '\'' +
-        ", text='" + this.getText() + '\'' +
-        ", response_url='" + this.getResponseUrl() + '\'';
+    return MoreObjects.toStringHelper(this)
+                      .add("team_id", this.getTeamId())
+                      .add("teamDomain", this.getTeamDomain())
+                      .add("channel_id", this.getChannelId())
+                      .add("channel_name", this.getChannelName())
+                      .add("user_id", this.getUserId())
+                      .add("user_name", this.getUserName())
+                      .add("command", this.getCommand())
+                      .add("text", this.getText())
+                      .add("response_url", this.getResponseUrl())
+                      .toString();
   }
 }

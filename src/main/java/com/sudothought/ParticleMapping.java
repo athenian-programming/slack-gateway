@@ -24,40 +24,48 @@ public class ParticleMapping {
 
     gateway.addMapping("/led",
                        (req, res) -> {
-                         final SlackRequest slackRequest = new SlackRequest(req);
+                         try {
+                           final SlackRequest slackRequest = new SlackRequest(req);
 
-                         if (!gateway.isValid(slackRequest.getToken()))
-                           return format("Invalid Slack token: %s", slackRequest.getToken());
+                           if (!gateway.isValid(slackRequest.getToken()))
+                             return format("Invalid Slack token: %s", slackRequest.getToken());
 
-                         final String arg = slackRequest.getText();
+                           final String arg = slackRequest.getText();
 
-                         if (Strings.isNullOrEmpty(arg)) {
-                           final Response<ParticleGetResponse> resp = particle.getLed(deviceName, particleToken).execute();
-                           if (!resp.isSuccessful())
-                             return format("Error: %s", resp.message());
-
-                           final ParticleGetResponse getResponse = resp.body();
-                           return getResponse.isConnected() ? format("LED is %s",
-                                                                     getResponse.getResult().equals("1") ? "on" : "off")
-                                                            : "Device not connected";
-                         }
-
-                         switch (arg) {
-                           case "on":
-                           case "off":
-                             final Response<ParticleSetResponse> resp = particle.setLed(deviceName, particleToken, arg).execute();
+                           if (Strings.isNullOrEmpty(arg)) {
+                             final Response<ParticleGetResponse> resp = particle.getLed(deviceName, particleToken).execute();
                              if (!resp.isSuccessful())
                                return format("Error: %s", resp.message());
 
-                             final ParticleSetResponse setResponse = resp.body();
-                             return setResponse.isConnected() ? format("Turned %s LED", arg) : "Device not connected";
+                             final ParticleGetResponse getResponse = resp.body();
+                             return getResponse.isConnected() ? format("LED is %s",
+                                                                       getResponse.getResult().equals("1") ? "on" : "off")
+                                                              : "Device not connected";
+                           }
 
-                           case "debug":
-                             LOGGER.info("Values: " + slackRequest);
-                             return "Values: " + slackRequest;
+                           switch (arg) {
+                             case "on":
+                             case "off":
+                               final Response<ParticleSetResponse> resp = particle.setLed(deviceName, particleToken, arg).execute();
+                               if (!resp.isSuccessful())
+                                 return format("Error: %s", resp.message());
 
-                           default:
-                             return format("Invalid argument: '%s'. Usage: /led [on/off]", arg);
+                               final ParticleSetResponse setResponse = resp.body();
+                               return setResponse.isConnected() ? format("Turned %s LED", arg) : "Device not connected";
+
+                             case "debug":
+                               final String msg = format("Request values: %s", slackRequest);
+                               LOGGER.info(msg);
+                               return msg;
+
+                             default:
+                               return format("Invalid argument: '%s'. Usage: /led [on/off]", arg);
+                           }
+                         }
+                         catch (Throwable e) {
+                           final String msg = format("%s - %s", e.getClass().getSimpleName(), e.getMessage());
+                           LOGGER.warn(msg);
+                           return msg;
                          }
                        });
   }

@@ -24,14 +24,20 @@ Create Heroku app with:
 $ heroku create app-name
 ```
 
+
 ### Slack Configuration
 
-* The Slack /led command is mapped to https://slack-gateway.herokuapp.com/led
+The Slack /led command is mapped to https://slack-gateway.herokuapp.com/led
 
 
 ### Photon Configuration
 
-* The sketch for the Photon is [here](https://github.com/pambrose/slack-gateway/blob/master/photon/led.ino)
+The [sketch for the Photon](https://github.com/pambrose/slack-gateway/blob/master/photon/led.ino) sets the LED to D0
 
-* The LED is connected to pin D0
+The device name is assigned in [application.conf](https://github.com/pambrose/slack-gateway/blob/master/src/main/resources/application.conf)
 
+
+### Heroku Configuration
+
+The *slack.token* and *particle.token* values can be assigned as Config Vars on Heroku. They can
+also be assigned in [application.conf](https://github.com/pambrose/slack-gateway/blob/master/src/main/resources/application.conf)

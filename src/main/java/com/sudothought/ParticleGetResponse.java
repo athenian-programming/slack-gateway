@@ -14,7 +14,7 @@ public class ParticleGetResponse {
 
   public String getResult() { return this.result; }
 
-  public boolean isConnected() { return coreInfo.connected; }
+  public boolean isConnected() { return this.coreInfo.connected; }
 
   public class CoreInfo {
     @JsonProperty

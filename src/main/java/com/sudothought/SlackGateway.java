@@ -49,9 +49,9 @@ public class SlackGateway {
   public String getConfigString(final String key) {
     return this.configVals
         .computeIfAbsent(key,
-                         s -> {
-                           final String tokenVal = new ProcessBuilder().environment().get(s);
-                           return tokenVal != null ? tokenVal : config.getString(s);
+                         val -> {
+                           final String tokenVal = new ProcessBuilder().environment().get(val);
+                           return tokenVal != null ? tokenVal : config.getString(val);
                          });
   }
 }
