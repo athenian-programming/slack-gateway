@@ -1,21 +1,24 @@
-## Slack Gateway for routing [slash command](https://api.slack.com/slash-commands) requests to Particle.io and Blynk.cc devices
+## Slack Gateway
+
+[Heroku](https://www.heroku.com/) server for routing [slash command](https://api.slack.com/slash-commands)
+requests to Particle.io and Blynk.cc devices.
 
 ### Setup
 
-* Clone this repo:
+Clone this repo:
 
 ```bash
 $ git clone https://github.com/pambrose/slack-gateway.git
 $ cd slack-gateway
 ```
 
-* Install [Heroku CLI](https://devcenter.heroku.com/articles/heroku-command) with:
+Install [Heroku CLI](https://devcenter.heroku.com/articles/heroku-command) with:
 
 ```bash
 $ brew install heroku
 ```
 
-* Create heroku app with:
+Create Heroku app with:
 
 ```bash
 $ heroku create app-name
