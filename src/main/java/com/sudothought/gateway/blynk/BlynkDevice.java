@@ -64,12 +64,13 @@ public class BlynkDevice
 
                 final String pinValue = new Gson().toJson(new String[] {arg.equals("on") ? "1" : "0"});
 
+                final RequestBody body = RequestBody.create(MediaType.parse("application/json"), pinValue);
                 final Request request = new Request.Builder().url(format("%s/%s/pin/%s", this.url, this.blynkToken, name))
-                                                             .put(RequestBody.create(MediaType.parse("application/json"), pinValue))
+                                                             .put(body)
                                                              .build();
                 okhttp3.Response set = new OkHttpClient().newCall(request).execute();
 
-                //final Response<Void> set = this.api.setPin(this.blynkToken, name, pinValue).execute();
+                // final Response<Void> set = this.api.setPin(this.blynkToken, name, pinValue).execute();
 
                 if (!set.isSuccessful())
                   throw new BlynkException(format("Blynk server error: %s", set.message()));
