@@ -1,9 +1,9 @@
-## Slack Gateway
+# Slack Gateway
 
 [Heroku](https://www.heroku.com/) server for routing [slash command](https://api.slack.com/slash-commands)
 requests to Particle.io and Blynk.cc devices.
 
-### Setup
+## Setup
 
 Clone this repo:
 
@@ -24,20 +24,45 @@ Create Heroku app with:
 $ heroku create app-name
 ```
 
+## Configuration
 
-### Slack Configuration
+### Slack
 
 The Slack /led command is mapped to https://slack-gateway.herokuapp.com/led
 
 
-### Photon Configuration
+### Photon
 
 The [sketch for the Photon](https://github.com/pambrose/slack-gateway/blob/master/photon/led.ino) sets the LED to D0
 
 The device name is assigned in [application.conf](https://github.com/pambrose/slack-gateway/blob/master/src/main/resources/application.conf)
 
 
-### Heroku Configuration
+### Heroku
 
 The *slack.token* and *particle.token* values can be assigned as Config Vars on Heroku. They can
 also be assigned in [application.conf](https://github.com/pambrose/slack-gateway/blob/master/src/main/resources/application.conf)
+
+
+## Deployment
+
+Deploy the gateway server to Heroku with:
+
+```bash
+$ make deploy
+```
+
+## Debugging
+
+You can see the request params of a /led command in Slack with:
+
+```bash
+/led debug
+```
+
+You can view the Heroku logs with:
+
+```bash
+$ make logs
+```
+
