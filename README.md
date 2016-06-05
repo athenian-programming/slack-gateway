@@ -1,4 +1,4 @@
-# Slack Gateway
+# Slack Gateway for Controlling Microcontrollers
 
 Gateway running on [Heroku](https://www.heroku.com/) for routing [Slash command](https://api.slack.com/slash-commands)
 requests to Particle.io and Blynk.cc devices.
