@@ -1,11 +1,11 @@
-# Slack Gateway for Reading and Writing Microcontroller Values
+## Slack Gateway for Reading and Writing Microcontroller Values
 
 [![Build Status](https://travis-ci.org/pambrose/slack-gateway.svg?branch=master)](https://travis-ci.org/pambrose/slack-gateway)
 
 Gateway running on [Heroku](https://www.heroku.com/) for routing [Slash command](https://api.slack.com/slash-commands)
 requests to Particle.io and Blynk.cc devices.
 
-## Usage
+### Usage
 
 From Slack:
 
@@ -19,7 +19,7 @@ From Slack:
 /blynk value
 ```
 
-## Setup
+### Setup
 
 Clone this repo:
 
@@ -40,29 +40,29 @@ Create Heroku app with:
 $ heroku create app-name
 ```
 
-## Configuration
+### Configuration
 
-### Slack
+#### Slack
 
 The Slack **/blynk** command is mapped to a POST on https://slack-gateway.herokuapp.com/blynk
 and the **/particle** command is mapped to a POST on https://slack-gateway.herokuapp.com/particle.
 
 
-### Photon
+#### Photon
 
 The [sketch for the Photon](https://github.com/pambrose/slack-gateway/blob/master/photon/led.ino) sets the LED to D0.
 
-## Blynk
+#### Blynk
 
 The Blynk device is a [SparkFun Blynk Board](https://www.sparkfun.com/products/13794). The LED in this example is the
 onboard LED at D5.
 
-### Heroku
+#### Heroku
 
 Assign *slack.token*, *particle.token*, and *blynk.token* values as Heroku Config Vars or in
 [application.conf](https://github.com/pambrose/slack-gateway/blob/master/src/main/resources/application.conf).
 
-## Deployment
+### Deployment
 
 Deploy the gateway server to Heroku with:
 
@@ -70,7 +70,7 @@ Deploy the gateway server to Heroku with:
 $ make deploy
 ```
 
-## Debugging
+### Debugging
 
 View the request params of a /particle or /blynk Slack command with:
 
