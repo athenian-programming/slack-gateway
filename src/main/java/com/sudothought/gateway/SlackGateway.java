@@ -12,8 +12,8 @@ public class SlackGateway {
     final BlynkDevice blynkDevice = new BlynkDevice(configInfo);
 
     final SlackGateway gateway = new SlackGateway();
-    gateway.map("particle", particleDevice, configInfo.getConfigString("particle.device.name"))
-           .map("blynk", blynkDevice, configInfo.getConfigString("blynk.pin.name"));
+    gateway.map("particle", particleDevice, "photon1")
+           .map("blynk", blynkDevice, "D5");
   }
 
   private final Service spark;

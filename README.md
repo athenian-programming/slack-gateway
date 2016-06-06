@@ -1,4 +1,4 @@
-# Slack Gateway for reaching microcontroller GPIO values
+# Slack Gateway for Reading and Writing Microcontroller Values
 
 Gateway running on [Heroku](https://www.heroku.com/) for routing [Slash command](https://api.slack.com/slash-commands)
 requests to Particle.io and Blynk.cc devices.
@@ -50,19 +50,15 @@ and the **/particle** command is mapped to a POST on https://slack-gateway.herok
 
 The [sketch for the Photon](https://github.com/pambrose/slack-gateway/blob/master/photon/led.ino) sets the LED to D0.
 
-The Photon device name is assigned in [application.conf](https://github.com/pambrose/slack-gateway/blob/master/src/main/resources/application.conf).
-
 ## Blynk
 
 The Blynk device is a [SparkFun Blynk Board](https://www.sparkfun.com/products/13794). The LED in this example is the
-onboard one at D5.
+onboard LED at D5.
 
 ### Heroku
 
-The *slack.token* and *particle.token* values can be assigned as Config Vars on Heroku. They can
-also be assigned in
+Assign *slack.token*, *particle.token*, and *blynk.token* values as Heroku Config Vars or in
 [application.conf](https://github.com/pambrose/slack-gateway/blob/master/src/main/resources/application.conf).
-
 
 ## Deployment
 

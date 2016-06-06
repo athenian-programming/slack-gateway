@@ -6,7 +6,6 @@ import com.sudothought.gateway.ConfigInfo;
 import com.sudothought.gateway.RouteSource;
 import com.sudothought.gateway.SlackRequest;
 import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import org.slf4j.Logger;
@@ -68,9 +67,9 @@ public class BlynkDevice
                 final Request request = new Request.Builder().url(format("%s/%s/pin/%s", this.url, this.blynkToken, name))
                                                              .put(body)
                                                              .build();
-                okhttp3.Response set = new OkHttpClient().newCall(request).execute();
+                //okhttp3.Response set = new OkHttpClient().newCall(request).execute();
 
-                // final Response<Void> set = this.api.setPin(this.blynkToken, name, pinValue).execute();
+                final Response<Void> set = this.api.setPin(this.blynkToken, name, pinValue).execute();
 
                 if (!set.isSuccessful())
                   throw new BlynkException(format("Blynk server error: %s", set.message()));
