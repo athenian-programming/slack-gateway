@@ -1,5 +1,7 @@
 # Slack Gateway for Reading and Writing Microcontroller Values
 
+[![Build Status](https://travis-ci.org/pambrose/slack-gateway.svg?branch=master)](https://travis-ci.org/pambrose/slack-gateway)
+
 Gateway running on [Heroku](https://www.heroku.com/) for routing [Slash command](https://api.slack.com/slash-commands)
 requests to Particle.io and Blynk.cc devices.
 
