@@ -70,13 +70,15 @@ $ make deploy
 
 ## Debugging
 
-You can view the request params of a /led command in Slack with:
+View the request params of a /particle or /blynk Slack command with:
 
 ```bash
-/led debug
+/particle debug
+
+/blynk debug
 ```
 
-You can view the Heroku logs with:
+View the Heroku logs with:
 
 ```bash
 $ make logs
