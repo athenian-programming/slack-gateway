@@ -67,7 +67,7 @@ Assign *slack.token*, *particle.token*, and *blynk.token* values as Heroku Confi
 Deploy the gateway server to Heroku with:
 
 ```bash
-$ make deploy
+$ mvn heroku:deploy
 ```
 
 ### Debugging
@@ -83,6 +83,6 @@ View the request params of a /particle or /blynk Slack command with:
 View the Heroku logs with:
 
 ```bash
-$ make logs
+$ heroku logs -t
 ```
 
