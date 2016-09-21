@@ -4,11 +4,13 @@ int ledValue = -1;
 void setup() {
     pinMode(led, OUTPUT);
 
+	// Set up the API endpoints
     Spark.variable("getLed", &ledValue, INT);
     Spark.function("setLed", ledToggle);
 }
 
 void loop() {
+	// Read the current value
     ledValue = digitalRead(led);
 }
 
