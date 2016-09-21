@@ -22,21 +22,21 @@
     <skip.integration.tests>true</skip.integration.tests>
 
     <guava.version>19.0</guava.version>
-    <retrofit.version>2.0.2</retrofit.version>
-    <gson.version>2.6.2</gson.version>
+    <retrofit.version>2.1.0</retrofit.version>
+    <gson.version>2.7</gson.version>
     <spark.version>2.5</spark.version>
     <config.version>1.3.0</config.version>
     <logback.version>1.1.7</logback.version>
     <slf4j.version>1.7.21</slf4j.version>
     <junit.version>4.12</junit.version>
 
-    <compiler.version>2.3.2</compiler.version>
+    <compiler.version>3.5.1</compiler.version>
     <assembly.version>2.6</assembly.version>
     <deploy.version>2.8.2</deploy.version>
     <source.plugin.version>2.4</source.plugin.version>
     <maven.compiler.version>3.5.1</maven.compiler.version>
     <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
-    <heroku-plugin.version>1.0.3</heroku-plugin.version>
+    <heroku-plugin.version>1.1.1</heroku-plugin.version>
   </properties>
 
   <dependencies>

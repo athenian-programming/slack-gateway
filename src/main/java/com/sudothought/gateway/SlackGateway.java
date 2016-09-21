@@ -11,6 +11,7 @@ public class SlackGateway {
     final ParticleDevice particleDevice = new ParticleDevice(configInfo);
     final BlynkDevice blynkDevice = new BlynkDevice(configInfo);
 
+    // Particle device named at https://console.particle.io/devices
     final SlackGateway gateway = new SlackGateway();
     gateway.map("particle", particleDevice, "photon1")
            .map("blynk", blynkDevice, "D5");

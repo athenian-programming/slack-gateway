@@ -18,12 +18,11 @@ public class ConfigInfo {
   }
 
   public String getConfigString(final String key) {
-    return this.configVals
-        .computeIfAbsent(key,
-                         val -> {
-                           final String tokenVal = new ProcessBuilder().environment().get(val);
-                           return tokenVal != null ? tokenVal : config.getString(val);
-                         });
+    return this.configVals.computeIfAbsent(key,
+                                           val -> {
+                                             final String tokenVal = new ProcessBuilder().environment().get(val);
+                                             return tokenVal != null ? tokenVal : config.getString(val);
+                                           });
   }
 
   public boolean isValid(final String requestToken) {
